@@ -8,7 +8,7 @@ TERMINAL COMMANDS WE NEED TO RUN THIS CODE:
 
 """
 
-def split_document_into_tokens(text, max_tokens=29000):
+def split_document_into_tokens(text, max_tokens=4000):
     """
     Split the input text into smaller chunks based on the number of tokens.
     Each chunk contains up to `max_tokens` tokens.
