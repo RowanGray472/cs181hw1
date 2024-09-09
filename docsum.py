@@ -8,7 +8,7 @@ TERMINAL COMMANDS WE NEED TO RUN THIS CODE:
 
 """
 
-def split_document_into_tokens(text, max_tokens=4000):
+def split_document_into_tokens(text, max_tokens=15000):
     """
     Split the input text into smaller chunks based on the number of tokens.
     Each chunk contains up to `max_tokens` tokens.
@@ -94,9 +94,9 @@ if __name__ == '__main__':
 
     print(f"file is split into {len(chunks)} chunks")
     counter = 0
+    import time
 
     for chunk in chunks:
-
         chat_completion = client.chat.completions.create(
             messages=[
                 {
@@ -113,6 +113,7 @@ if __name__ == '__main__':
         summary_list.append(chat_completion.choices[0].message.content)
         counter += 1
         print(f"chunk {counter} of {len(chunks)} is summarized")
+        time.sleep(30)  # wait for 30 seconds
 
     summary = ' '.join(summary_list)
 
