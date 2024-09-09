@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
     chunks = split_document_into_tokens(text)
 
-    print("file is split into chunks")
+    print(f"file is split into {len(chunks)} chunks")
     counter = 0
 
     for chunk in chunks:
