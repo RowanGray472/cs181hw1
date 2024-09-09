@@ -4,7 +4,7 @@
  
 This code takes a document file as input and returns a 1st grade level summary of that document using the Groq API. 
 
-The code works locally and *theoretically* works on GitHub, but it takes about 8 minutes to do each test because of weird rate limit errors that I only get on GitHub and I sporadically get *internal service error* messages from the Groq API.
+The code works locally and *theoretically* works on GitHub, but it takes about 8 minutes to do each test because of weird rate limit errors that I only get on GitHub and I sporadically get *internal server error* messages from the Groq API.
 
 Here's what a sample input might look like. In this case the input file was the Declaration of Independence
 
