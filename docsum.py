@@ -112,7 +112,7 @@ if __name__ == '__main__':
         )
         summary_list.append(chat_completion.choices[0].message.content)
         counter += 1
-        print(f"chunk {counter} of {len(chunks)}is summarized")
+        print(f"chunk {counter} of {len(chunks)} is summarized")
 
     summary = ' '.join(summary_list)
 
