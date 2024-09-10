@@ -96,38 +96,57 @@ if __name__ == '__main__':
     counter = 0
     import time
 
+    max_retries = 10
+
     for chunk in chunks:
-        chat_completion = client.chat.completions.create(
-            messages=[
-                {
-                    'role': 'system',
-                    'content': 'Summarize the input text below.  Limit the summary to 1 paragraph and use a 1st grade reading level.',
-                },
-                {
-                    "role": "user",
-                    "content": chunk,
-                }
-            ],
-            model="llama3-8b-8192",
-        )
-        summary_list.append(chat_completion.choices[0].message.content)
+        for i in range(max_retries):
+            try:
+                chat_completion = client.chat.completions.create(
+                    messages=[
+                        {
+                            'role': 'system',
+                            'content': 'Summarize the input text below.  Limit the summary to 1 paragraph and use a 1st grade reading level.',
+                        },
+                        {
+                            "role": "user",
+                            "content": chunk,
+                        }
+                    ],
+                    model="llama3-8b-8192",
+                )
+                summary_list.append(chat_completion.choices[0].message.content)
+                break
+            except Exception as e:
+                print(f"Error: {e}. Attempt {i+1} of {max_retries}. Retrying in 10 seconds...")
+                time.sleep(10)
+        else:
+            raise Exception("Max retries exceeded.")
+            
         counter += 1
         print(f"chunk {counter} of {len(chunks)} is summarized")
         time.sleep(8)  # wait for 30 seconds
 
     summary = ' '.join(summary_list)
 
-    chat_completion = client.chat.completions.create(
-            messages=[
-                {
-                    'role': 'system',
-                    'content': 'Summarize the input text below.  Limit the summary to 1 paragraph and use a 1st grade reading level.',
-                },
-                {
-                    "role": "user",
-                    "content": summary,
-                }
-            ],
-            model="llama3-8b-8192",
-        )
+    for i in range(max_retries):
+        try:
+            chat_completion = client.chat.completions.create(
+                messages=[
+                    {
+                        'role': 'system',
+                        'content': 'Summarize the input text below.  Limit the summary to 1 paragraph and use a 1st grade reading level.',
+                    },
+                    {
+                        "role": "user",
+                        "content": summary,
+                    }
+                ],
+                model="llama3-8b-8192",
+            )
+            break
+        except Exception as e:
+            print(f"Error: {e}. Attempt {i+1} of {max_retries}. Retrying in 10 seconds...")
+            time.sleep(10)
+    else:
+        raise Exception("Max retries exceeded.")
     print(chat_completion.choices[0].message.content)
